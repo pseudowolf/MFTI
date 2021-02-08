@@ -19,11 +19,12 @@ COLORS = [RED, BLUE, YELLOW, GREEN, MAGENTA, CYAN]
 
 
 def new_ball():
-    global x, y, r
     """
-    Draws ball in random place with random color and size
+    Draws new ball.
     :return: None
     """
+    global x, y, r
+
     x = randint(100, 1100)
     y = randint(100, 900)
     r = randint(10, 100)
@@ -33,13 +34,12 @@ def new_ball():
 
 def click(event):
     """
-    Get click and check is click inside the ballor not
+    Get click and check is click inside the ball or not.
     :param event: pygame.event
     :return: None
     """
     mouse_x = event.pos[0]
     mouse_y = event.pos[1]
-    print(x, y, r)
     if is_click_inside_ball(mouse_x, x, mouse_y, y, r):
         print('Catch it!')
     else:
