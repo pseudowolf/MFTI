@@ -32,6 +32,11 @@ def new_ball():
 
 
 def click(event):
+    """
+    Get click and check is click inside the ballor not
+    :param event: pygame.event
+    :return: None
+    """
     mouse_x = event.pos[0]
     mouse_y = event.pos[1]
     print(x, y, r)
@@ -42,6 +47,16 @@ def click(event):
 
 
 def is_click_inside_ball(x1, x2, y1, y2, r) -> bool:
+    """
+    Calculates the distance between two points and
+    returns True if is smaller than ball's radius.
+    :param x1: first point's x-coordinate
+    :param x2: second point's x-coordinate'
+    :param y1: first point's y-coordinate'
+    :param y2: second point's y-coordinate'
+    :param r: ball's radius'
+    :return: bool
+    """
     distance = sqrt(abs(x1 - x2) ** 2 + abs(y1 - y2) ** 2)
     return distance <= r
 
