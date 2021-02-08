@@ -44,6 +44,7 @@ def click(event):
     if is_click_inside_ball(mouse_x, x, mouse_y, y, r):
         print('Catch it!')
         update_score()
+        print(SCORE)
     else:
         print('Oops! You are missed!')
 
@@ -64,6 +65,7 @@ def is_click_inside_ball(x1, x2, y1, y2, r) -> bool:
 
 
 def update_score():
+    global SCORE
     SCORE += 1
 
 
