@@ -17,6 +17,8 @@ CYAN = (0, 255, 255)
 BLACK = (0, 0, 0)
 COLORS = [RED, BLUE, YELLOW, GREEN, MAGENTA, CYAN]
 
+SCORE: int = 0
+
 
 def new_ball():
     """
@@ -24,7 +26,6 @@ def new_ball():
     :return: None
     """
     global x, y, r
-
     x = randint(100, 1100)
     y = randint(100, 900)
     r = randint(10, 100)
@@ -42,6 +43,7 @@ def click(event):
     mouse_y = event.pos[1]
     if is_click_inside_ball(mouse_x, x, mouse_y, y, r):
         print('Catch it!')
+        update_score()
     else:
         print('Oops! You are missed!')
 
@@ -59,6 +61,10 @@ def is_click_inside_ball(x1, x2, y1, y2, r) -> bool:
     """
     distance = sqrt(abs(x1 - x2) ** 2 + abs(y1 - y2) ** 2)
     return distance <= r
+
+
+def update_score():
+    SCORE += 1
 
 
 pygame.display.update()
