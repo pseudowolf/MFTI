@@ -7,6 +7,7 @@ pygame.init()
 
 FPS = 2
 screen = pygame.display.set_mode((400, 400))
+pygame.display.set_caption('Catch the ball!')
 
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
@@ -22,8 +23,7 @@ SCORE: int = 0
 
 def new_ball():
     """
-    Draws new ball.
-    :return: None
+    Draws new ball with random size and color in random place
     """
     global x, y, r
     x = randint(100, 1100)
@@ -73,6 +73,7 @@ pygame.display.update()
 clock = pygame.time.Clock()
 finished = False
 
+# Game loop begins
 while not finished:
     clock.tick(FPS)
     for event in pygame.event.get():
@@ -86,3 +87,4 @@ while not finished:
     screen.fill(BLACK)
 
 pygame.quit()
+
