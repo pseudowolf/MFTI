@@ -6,8 +6,9 @@ from math import sqrt
 pygame.init()
 
 FPS = 2
-screen = pygame.display.set_mode((400, 400))
+screen = pygame.display.set_mode((600, 600))
 pygame.display.set_caption('Catch the ball!')
+
 
 # Color variables
 RED = (255, 0, 0)
@@ -18,7 +19,9 @@ MAGENTA = (255, 0, 255)
 CYAN = (0, 255, 255)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
-COLORS = [RED, BLUE, YELLOW, GREEN, MAGENTA, CYAN]
+COLORS = [RED, BLUE, YELLOW, GREEN, MAGENTA, CYAN, BLACK]
+
+screen.fill(WHITE)
 
 # Variable to store player's score
 SCORE: int = 0
@@ -30,7 +33,7 @@ SCORE: int = 0
 font = pygame.font.Font("freesansbold.ttf", 20)
 # create a text suface object,
 # on which text is drawn on it.
-text = font.render('SCORE: '+str(SCORE), True, BLUE, WHITE)
+text = font.render('SCORE: ' + str(SCORE), True, BLUE, WHITE)
 # create a rectangular object for the
 # text surface object
 textRect = text.get_rect()
@@ -38,18 +41,29 @@ textRect = text.get_rect()
 textRect.topleft = (5, 5)
 
 
-
-
 def new_ball():
     """
     Draws new ball with random size and color in random place
     """
     global x, y, r
-    x = randint(100, 1100)
-    y = randint(100, 900)
+    x = randint(100, 1000)
+    y = randint(100, 800)
     r = randint(10, 100)
-    color = COLORS[randint(0, 5)]
+    color = COLORS[randint(0, 6)]
     circle(screen, color, (x, y), r)
+
+
+def new_rect():
+    """
+    Draw new rectangle with random size and color
+    :return: None
+    """
+    global size
+    x = randint(100, 1000)
+    y = randint(100, 800)
+    size = randint(100, 300)
+    color = COLORS[randint(0, 6)]
+    rect(screen, color, (x, y, size, size))
 
 
 def click(event):
@@ -61,7 +75,11 @@ def click(event):
     mouse_x = event.pos[0]
     mouse_y = event.pos[1]
     if is_click_inside_ball(mouse_x, x, mouse_y, y, r):
-        print('Catch it!')
+        print('Catch the ball!')
+        update_score()
+        print(SCORE)
+    elif is_click_inside_rect(mouse_x, x, mouse_y, y, size):
+        print('Catch the rect!')
         update_score()
         print(SCORE)
     else:
@@ -83,6 +101,23 @@ def is_click_inside_ball(x1, x2, y1, y2, r) -> bool:
     return distance <= r
 
 
+def is_click_inside_rect(x1, x2, y1, y2, s) -> bool:
+    """
+    Checks there is a mouse click inside the rectangle
+    :param x1: x coordinate of the mouse click
+    :param x2: x coordinate of the rect's origin
+    :param y1: y coordinate of the mouse click
+    :param y2: y coordinate of the rect's origin
+    :param w: rect's width and height
+    :return: Boolean
+    """
+    if x2 <= x1 and x1 <= x2 + s:
+        if y2 <= y1 and y1 <= y2 + s:
+            return True
+    else:
+        return False
+
+
 def update_score():
     """
     Update SCORE variable
@@ -91,7 +126,7 @@ def update_score():
     global text
     global SCORE
     SCORE += 1
-    text = font.render('SCORE: '+str(SCORE), True, BLUE, WHITE)
+    text = font.render('SCORE: ' + str(SCORE), True, BLUE, WHITE)
 
 
 pygame.display.update()
@@ -109,13 +144,10 @@ while not finished:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             click(event)
 
-
     new_ball()
+    new_rect()
     screen.blit(text, textRect)
     pygame.display.update()
     screen.fill(WHITE)
 
-
-
 pygame.quit()
-
