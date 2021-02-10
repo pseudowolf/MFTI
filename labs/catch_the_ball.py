@@ -74,11 +74,11 @@ def click(event):
     """
     mouse_x = event.pos[0]
     mouse_y = event.pos[1]
-    if is_click_inside_ball(mouse_x, x, mouse_y, y, r):
+    if is_click_inside_ball(mouse_x, mouse_y, x, y, r):
         print('Catch the ball!')
         update_score()
         print(SCORE)
-    elif is_click_inside_rect(mouse_x, x, mouse_y, y, size):
+    elif is_click_inside_rect(mouse_x, mouse_y, x, y, size):
         print('Catch the rect!')
         update_score()
         print(SCORE)
@@ -86,7 +86,7 @@ def click(event):
         print('Oops! You are missed!')
 
 
-def is_click_inside_ball(x1, x2, y1, y2, r) -> bool:
+def is_click_inside_ball(x1, y1, x2, y2, r) -> bool:
     """
     Calculates the distance between two points and
     returns True if is smaller than ball's radius.
@@ -101,7 +101,7 @@ def is_click_inside_ball(x1, x2, y1, y2, r) -> bool:
     return distance <= r
 
 
-def is_click_inside_rect(x1, x2, y1, y2, s) -> bool:
+def is_click_inside_rect(x1, y1, x2, y2, s) -> bool:
     """
     Checks there is a mouse click inside the rectangle
     :param x1: x coordinate of the mouse click
@@ -111,11 +111,18 @@ def is_click_inside_rect(x1, x2, y1, y2, s) -> bool:
     :param w: rect's width and height
     :return: Boolean
     """
+
     if x2 <= x1 and x1 <= x2 + s:
         if y2 <= y1 and y1 <= y2 + s:
+            print(x1, y1, x2, y2, s)
+            print('True')
             return True
     else:
+        print(x1, y1, x2, y2, s)
+        print('False')
         return False
+
+
 
 
 def update_score():
