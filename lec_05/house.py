@@ -5,7 +5,7 @@ def main():
     draw_house(x, y, width, height)
 
 
-def draw_house_foudation(x, y, width, height):
+def draw_house_foundation(x, y, width, height):
     """
     House foundation's drawing function with with and height and
     coordinates of point x middle bottom and y bottom of foundation
@@ -66,5 +66,5 @@ def draw_house(x, y, width, height):
     draw_house_walls(x, y - foundation_height, walls_width, walls_height)
     draw_house_roof(x, y - foundation_height - walls_height, width, roof_height)
 
-
-main()
+if __name__ == '__main__':
+    main()
