@@ -16,7 +16,7 @@ def draw_house_foundation(x, y, width, height):
     :return: None
     """
     print('Типа рисую фундамент...', x, y, width, height)
-    pass
+
 
 
 def draw_house_walls(x, y, width, height):
@@ -30,7 +30,7 @@ def draw_house_walls(x, y, width, height):
     :return: None
     """
     print('Типа рисую стены...', x, y, width, height)
-    pass
+
 
 
 def draw_house_roof(x, y, width, height):
@@ -44,7 +44,7 @@ def draw_house_roof(x, y, width, height):
     :return: None
     """
     print('Типа рисую крышу...', x, y, width, height)
-    pass
+
 
 
 def draw_house(x, y, width, height):
@@ -62,7 +62,7 @@ def draw_house(x, y, width, height):
     walls_height = 0.5 * width
     walls_width = 0.9 * width
     roof_height = height - foundation_height - walls_height
-    draw_house_foudation(x, y, width, foundation_height)
+    draw_house_foundation(x, y, width, foundation_height)
     draw_house_walls(x, y - foundation_height, walls_width, walls_height)
     draw_house_roof(x, y - foundation_height - walls_height, width, roof_height)
 
