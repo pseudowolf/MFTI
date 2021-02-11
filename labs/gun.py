@@ -55,7 +55,8 @@ class ball():
         self.x += self.vx
         self.y -= self.vy
 
-    def hittest(self, obj):
+    def hittest(self, obj) -> bool:
+
         """Функция проверяет сталкивалкивается ли данный обьект с целью, описываемой в обьекте obj.
 
         Args:
@@ -63,15 +64,20 @@ class ball():
         Returns:
             Возвращает True в случае столкновения мяча и цели. В противном случае возвращает False.
         """
+
         # FIXME
-            return False
+        return False
+
+
 
 
 class gun():
-    self.f2_power = 10
-    self.f2_on = 0
-    self.an = 1
-    # self.id = canv.create_line(20,450,50,420,width=7) # FIXME: don't know how to set it...
+
+    def __init__(self):
+        self.f2_power = 10
+        self.f2_on = 0
+        self.an = 1
+        self.id = canv.create_line(20,450,50,420,width=7) # FIXME: don't know how to set it...
 
     def fire2_start(self, event):
         self.f2_on = 1
@@ -116,19 +122,20 @@ class gun():
 
 
 class target():
-    self.points = 0
-    self.live = 1
-    # FIXME: don't work!!! How to call this functions when object is created?
-    # self.id = canv.create_oval(0,0,0,0)
-    # self.id_points = canv.create_text(30,30,text = self.points,font = '28')
-    # self.new_target()
+    def __init__(self):
+        self.points = 0
+        self.live = 1
+        # FIXME: don't work!!! How to call this functions when object is created?
+        self.id = canv.create_oval(0,0,0,0)
+        self.id_points = canv.create_text(30,30,text = self.points,font = '28')
+        self.new_target()
 
     def new_target(self):
         """ Инициализация новой цели. """
-        x = self.x = rnd(600, 780)
-        y = self.y = rnd(300, 550)
-        r = self.r = rnd(2, 50)
-        color = self.color = 'red'
+        x = rnd(600, 780)
+        y = rnd(300, 550)
+        r = rnd(2, 50)
+        color = 'red'
         canv.coords(self.id, x-r, y-r, x+r, y+r)
         canv.itemconfig(self.id, fill=color)
 
@@ -177,4 +184,4 @@ def new_game(event=''):
 
 new_game()
 
-mainloop()
+tk.mainloop()
