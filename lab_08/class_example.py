@@ -34,4 +34,5 @@ def main():
             finished = True
     print('You win!')
 
+
 main()
