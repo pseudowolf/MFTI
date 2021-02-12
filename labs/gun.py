@@ -6,10 +6,10 @@ import time
 # print (dir(math))
 
 root = tk.Tk()
-fr = tk.Frame(root)
+frame = tk.Frame(root)
 root.geometry('800x600')
-canv = tk.Canvas(root, bg='white')
-canv.pack(fill=tk.BOTH, expand=1)
+canvas = tk.Canvas(root, bg='white')
+canvas.pack(fill=tk.BOTH, expand=1)
 
 
 class ball():
@@ -26,7 +26,7 @@ class ball():
         self.vx = 0
         self.vy = 0
         self.color = choice(['blue', 'green', 'red', 'brown'])
-        self.id = canv.create_oval(
+        self.id = canvas.create_oval(
                 self.x - self.r,
                 self.y - self.r,
                 self.x + self.r,
@@ -35,8 +35,8 @@ class ball():
         )
         self.live = 30
 
-    def set_coords(self):
-        canv.coords(
+    def set_coordinates(self):
+        canvas.coords(
                 self.id,
                 self.x - self.r,
                 self.y - self.r,
@@ -55,7 +55,7 @@ class ball():
         self.x += self.vx
         self.y -= self.vy
 
-    def hittest(self, obj) -> bool:
+    def hit_test(self, obj) -> bool:
 
         """Функция проверяет сталкивалкивается ли данный обьект с целью, описываемой в обьекте obj.
 
@@ -72,12 +72,11 @@ class ball():
 
 
 class gun():
-
     def __init__(self):
         self.f2_power = 10
         self.f2_on = 0
-        self.an = 1
-        self.id = canv.create_line(20,450,50,420,width=7) # FIXME: don't know how to set it...
+        self.angle = 1
+        self.id = canvas.create_line(20, 450, 50, 420, width=7) # FIXME: don't know how to set it...
 
     def fire2_start(self, event):
         self.f2_on = 1
@@ -92,9 +91,9 @@ class gun():
         bullet += 1
         new_ball = ball()
         new_ball.r += 5
-        self.an = math.atan((event.y-new_ball.y) / (event.x-new_ball.x))
-        new_ball.vx = self.f2_power * math.cos(self.an)
-        new_ball.vy = - self.f2_power * math.sin(self.an)
+        self.angle = math.atan((event.y - new_ball.y) / (event.x - new_ball.x))
+        new_ball.vx = self.f2_power * math.cos(self.angle)
+        new_ball.vy = - self.f2_power * math.sin(self.angle)
         balls += [new_ball]
         self.f2_on = 0
         self.f2_power = 10
@@ -102,23 +101,23 @@ class gun():
     def targetting(self, event=0):
         """Прицеливание. Зависит от положения мыши."""
         if event:
-            self.an = math.atan((event.y-450) / (event.x-20))
+            self.angle = math.atan((event.y - 450) / (event.x - 20))
         if self.f2_on:
-            canv.itemconfig(self.id, fill='orange')
+            canvas.itemconfig(self.id, fill='orange')
         else:
-            canv.itemconfig(self.id, fill='black')
-        canv.coords(self.id, 20, 450,
-                    20 + max(self.f2_power, 20) * math.cos(self.an),
-                    450 + max(self.f2_power, 20) * math.sin(self.an)
-                    )
+            canvas.itemconfig(self.id, fill='black')
+        canvas.coords(self.id, 20, 450,
+                      20 + max(self.f2_power, 20) * math.cos(self.angle),
+                      450 + max(self.f2_power, 20) * math.sin(self.angle)
+                      )
 
     def power_up(self):
         if self.f2_on:
             if self.f2_power < 100:
                 self.f2_power += 1
-            canv.itemconfig(self.id, fill='orange')
+            canvas.itemconfig(self.id, fill='orange')
         else:
-            canv.itemconfig(self.id, fill='black')
+            canvas.itemconfig(self.id, fill='black')
 
 
 class target():
@@ -126,8 +125,8 @@ class target():
         self.points = 0
         self.live = 1
         # FIXME: don't work!!! How to call this functions when object is created?
-        self.id = canv.create_oval(0,0,0,0)
-        self.id_points = canv.create_text(30,30,text = self.points,font = '28')
+        self.id = canvas.create_oval(0, 0, 0, 0)
+        self.id_points = canvas.create_text(30, 30, text=self.points, font='28')
         self.new_target()
 
     def new_target(self):
@@ -136,18 +135,18 @@ class target():
         y = rnd(300, 550)
         r = rnd(2, 50)
         color = 'red'
-        canv.coords(self.id, x-r, y-r, x+r, y+r)
-        canv.itemconfig(self.id, fill=color)
+        canvas.coords(self.id, x - r, y - r, x + r, y + r)
+        canvas.itemconfig(self.id, fill=color)
 
     def hit(self, points=1):
         """Попадание шарика в цель."""
-        canv.coords(self.id, -10, -10, -10, -10)
+        canvas.coords(self.id, -10, -10, -10, -10)
         self.points += points
-        canv.itemconfig(self.id_points, text=self.points)
+        canvas.itemconfig(self.id_points, text=self.points)
 
 
 t1 = target()
-screen1 = canv.create_text(400, 300, text='', font='28')
+screen1 = canvas.create_text(400, 300, text='', font='28')
 g1 = gun()
 bullet = 0
 balls = []
@@ -158,27 +157,27 @@ def new_game(event=''):
     t1.new_target()
     bullet = 0
     balls = []
-    canv.bind('<Button-1>', g1.fire2_start)
-    canv.bind('<ButtonRelease-1>', g1.fire2_end)
-    canv.bind('<Motion>', g1.targetting)
+    canvas.bind('<Button-1>', g1.fire2_start)
+    canvas.bind('<ButtonRelease-1>', g1.fire2_end)
+    canvas.bind('<Motion>', g1.targetting)
 
     z = 0.03
     t1.live = 1
     while t1.live or balls:
         for b in balls:
             b.move()
-            if b.hittest(t1) and t1.live:
+            if b.hit_test(t1) and t1.live:
                 t1.live = 0
                 t1.hit()
-                canv.bind('<Button-1>', '')
-                canv.bind('<ButtonRelease-1>', '')
-                canv.itemconfig(screen1, text='Вы уничтожили цель за ' + str(bullet) + ' выстрелов')
-        canv.update()
+                canvas.bind('<Button-1>', '')
+                canvas.bind('<ButtonRelease-1>', '')
+                canvas.itemconfig(screen1, text='Вы уничтожили цель за ' + str(bullet) + ' выстрелов')
+        canvas.update()
         time.sleep(0.03)
         g1.targetting()
         g1.power_up()
-    canv.itemconfig(screen1, text='')
-    canv.delete(gun)
+    canvas.itemconfig(screen1, text='')
+    canvas.delete(gun)
     root.after(750, new_game)
 
 
