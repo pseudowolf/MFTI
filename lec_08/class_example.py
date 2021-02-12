@@ -20,7 +20,7 @@ class Dragon:
 
 def main():
 
-    enemy_list = [Dragon('Smog'), Dragon('Hidra')]
+    enemy_list = [Dragon('Smog'), Dragon('Hydra')]
     finished = False
     while not finished:
         enemy = enemy_list[0]
