@@ -98,7 +98,7 @@ class gun():
         self.f2_on = 0
         self.f2_power = 10
 
-    def targetting(self, event=0):
+    def aiming(self, event=0):
         """Прицеливание. Зависит от положения мыши."""
         if event:
             self.angle = math.atan((event.y - 450) / (event.x - 20))
@@ -159,7 +159,7 @@ def new_game(event=''):
     balls = []
     canvas.bind('<Button-1>', g1.fire2_start)
     canvas.bind('<ButtonRelease-1>', g1.fire2_end)
-    canvas.bind('<Motion>', g1.targetting)
+    canvas.bind('<Motion>', g1.aiming)
 
     z = 0.03
     t1.live = 1
@@ -174,7 +174,7 @@ def new_game(event=''):
                 canvas.itemconfig(screen1, text='Вы уничтожили цель за ' + str(bullet) + ' выстрелов')
         canvas.update()
         time.sleep(0.03)
-        g1.targetting()
+        g1.aiming()
         g1.power_up()
     canvas.itemconfig(screen1, text='')
     canvas.delete(gun)
