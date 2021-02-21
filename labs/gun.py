@@ -76,7 +76,7 @@ class gun():
         self.f2_power = 10
         self.f2_on = 0
         self.angle = 1
-        self.id = canvas.create_line(20, 450, 50, 420, width=7) # FIXME: don't know how to set it...
+        self.id = canvas.create_line(20, 450, 50, 420, width=7)
 
     def fire2_start(self, event):
         self.f2_on = 1
