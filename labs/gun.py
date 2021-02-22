@@ -6,10 +6,12 @@ import time
 # print (dir(math))
 
 root = tk.Tk()
+root.title('GUN')
 frame = tk.Frame(root)
 root.geometry('800x600')
 canvas = tk.Canvas(root, bg='white')
 canvas.pack(fill=tk.BOTH, expand=1)
+gravity = 9.8
 
 
 class ball():
@@ -44,16 +46,20 @@ class ball():
                 self.y + self.r
         )
 
-    def move(self):
+    def moveit(self):
         """Переместить мяч по прошествии единицы времени.
 
         Метод описывает перемещение мяча за один кадр перерисовки. То есть, обновляет значения
         self.x и self.y с учетом скоростей self.vx и self.vy, силы гравитации, действующей на мяч,
         и стен по краям окна (размер окна 800х600).
         """
-        # FIXME
+
         self.x += self.vx
-        self.y -= self.vy
+        self.y -= self.vy - gravity
+        print(self.vx, self.vy)
+        canvas.move(self, self.x, self.y)
+
+
 
     def hit_test(self, obj) -> bool:
 
@@ -165,7 +171,7 @@ def new_game(event=''):
     t1.live = 1
     while t1.live or balls:
         for b in balls:
-            b.move()
+            b.moveit()
             if b.hit_test(t1) and t1.live:
                 t1.live = 0
                 t1.hit()
