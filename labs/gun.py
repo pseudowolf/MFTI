@@ -11,10 +11,11 @@ frame = tk.Frame(root)
 root.geometry('800x600')
 canvas = tk.Canvas(root, bg='white')
 canvas.pack(fill=tk.BOTH, expand=1)
+
 gravity = 9.8
 
 
-class ball():
+class Ball:
     def __init__(self, x=40, y=450):
         """ Конструктор класса ball
 
@@ -55,9 +56,9 @@ class ball():
         """
 
         self.x += self.vx
-        self.y -= self.vy - gravity
-        print(self.vx, self.vy)
+        self.y -= self.vy
         canvas.move(self, self.x, self.y)
+
 
 
 
@@ -77,7 +78,7 @@ class ball():
 
 
 
-class gun():
+class Gun:
     def __init__(self):
         self.f2_power = 10
         self.f2_on = 0
@@ -95,7 +96,7 @@ class gun():
         """
         global balls, bullet
         bullet += 1
-        new_ball = ball()
+        new_ball = Ball()
         new_ball.r += 5
         self.angle = math.atan((event.y - new_ball.y) / (event.x - new_ball.x))
         new_ball.vx = self.f2_power * math.cos(self.angle)
@@ -126,7 +127,7 @@ class gun():
             canvas.itemconfig(self.id, fill='black')
 
 
-class target():
+class Target:
     def __init__(self):
         self.points = 0
         self.live = 1
@@ -151,9 +152,9 @@ class target():
         canvas.itemconfig(self.id_points, text=self.points)
 
 
-t1 = target()
+t1 = Target()
 screen1 = canvas.create_text(400, 300, text='', font='28')
-g1 = gun()
+g1 = Gun()
 bullet = 0
 balls = []
 
@@ -179,11 +180,11 @@ def new_game(event=''):
                 canvas.bind('<ButtonRelease-1>', '')
                 canvas.itemconfig(screen1, text='Вы уничтожили цель за ' + str(bullet) + ' выстрелов')
         canvas.update()
-        time.sleep(0.03)
+        time.sleep(z)
         g1.aiming()
         g1.power_up()
     canvas.itemconfig(screen1, text='')
-    canvas.delete(gun)
+    canvas.delete(Gun)
     root.after(750, new_game)
 
 

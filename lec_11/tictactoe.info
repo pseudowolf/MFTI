@@ -1,0 +1,11 @@
+TicTacToe:
+game objects:
+Game Round Manager: main_loop()
+Player: player1, player2
+gui window: buttons, results table
+Gameboard:  is_game_over(), cells[]: state, sprites, get_cell_state()
+Gameboad View: load_cells_states(), get_coords()
+signs: cross, zero
+# game AI
+
+
