@@ -22,6 +22,10 @@ class Player:
 
 
 class Gameboard:
+    """
+    Class for gameboard
+    """
+
     def __init__(self):
         self.height = 3
         self.width = 3
@@ -36,6 +40,8 @@ class GameboardView:
     def __init__(self, board):
         # download cells sprites
         # show board's initial state
+
+        self._boardImage = pygame.image.load('tictacboard.png')
         self._board = board
         self._height = board.height * CELL_SIZE
         self._width = board.width * CELL_SIZE
@@ -83,6 +89,7 @@ class GameWindow:
         self._title = 'Tic Tac Toe'
         self._screen = pygame.display.set_mode((self._width, self._height))
         pygame.display.set_caption(self._title)
+        self._screen.fill('white')
 
         self._board = Gameboard()
         self._board_widget = GameboardView(self._board)
